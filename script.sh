@@ -11,3 +11,6 @@ mount /dev/sda2 /mnt
 mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
 pacstrap /mnt base linux linux-firmware base-devel vim
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
