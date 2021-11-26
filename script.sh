@@ -7,4 +7,4 @@ STR=$'g\nn\n1\n\n+512M\nt\n1\nn\n\n\n\nw'
 echo "$STR" | fdisk /dev/sda
 mkfs.vfat -F 32 /dev/sda1
 mkfs.btrfs /dev/sda2
-pacstrap /mnt base linux linux-firmware base base-devel vim
+pacstrap /mnt base linux linux-firmware base-devel vim
