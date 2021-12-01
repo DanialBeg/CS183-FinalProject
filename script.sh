@@ -51,7 +51,14 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # CHROOT
 # The chroot (change root directory) command changes the root directory of a calling process to a specified path.
 # This allows us to effectively enter and modify the actual system where Arch Linux will be installed
-
+# Commands will be fed until end of transmission, so comments can't be added in the EOT block
+# First, timezone and system locale is set up
+# Hostname is given to computer 
+# The GRUB bootloader will be installed to /dev/sda and a configuration file will be generated to accompany it. The default settings are kept for GRUB.
+# root and 'student' users are made
+# Some services are enabled to run upon every boot, such as NetworkManager for internet connection and pulseaudio for audio.
+# Zoom is installed and shows an example of how some proprietary software is installed when not present in official repository. 
+# .bash_profile is updated so that everytime user logs in, the desktop environment is loaded.
 arch-chroot /mnt << "EOT"
 ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 hwclock --systohc
@@ -66,7 +73,6 @@ root
 root
 systemctl enable NetworkManager
 systemctl enable pulseaudio
-systemctl enable lightdm.service
 wget https://zoom.us/client/latest/zoom_x86_64.pkg.tar.xz
 pacman -U --noconfirm zoom_x86_64.pkg.tar.xz
 rm zoom_x86_64.pkg.tar.xz
@@ -77,5 +83,13 @@ ucr
 touch /home/student/.bash_profile
 echo exec startxfce4 >> /home/student/.bash_profile
 EOT
+# ================================================================================
+
+# FINALIZING
+# Unmount all mounted partitions on /mnt and /mnt/boot
+# If drives are still mounted, reboot won't be smooth
+# Reboot, and GRUB will appear. GRUB will boot into OS.
+# If CD is not removed, in the Live Arch CD GRUB, select "Boot Existing OS"
 umount -R /mnt
 reboot
+# ================================================================================
