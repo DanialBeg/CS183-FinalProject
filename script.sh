@@ -60,6 +60,9 @@ wget https://zoom.us/client/latest/zoom_x86_64.pkg.tar.xz
 pacman -U --noconfirm zoom_x86_64.pkg.tar.xz
 rm zoom_x86_64.pkg.tar.xz
 useradd -m -G wheel -s /bin/bash student
+passwd student
+ucr
+ucr
 touch ~/.bash_profile
 echo exec startxfce4 > ~/.bash_profile
 EOT
