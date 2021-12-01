@@ -12,7 +12,7 @@ mkfs.btrfs /dev/sda2
 mount /dev/sda2 /mnt
 mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
-pacstrap /mnt base linux linux-firmware base-devel vim networkmanager grub efibootmgr firefox git xorg xfce4 flatpak
+pacstrap /mnt base linux linux-firmware base-devel vim networkmanager grub efibootmgr firefox git xorg xfce4 flatpak libreoffice wget
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt << "EOT"
 ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
@@ -27,7 +27,6 @@ passwd
 root
 root
 systemctl enable NetworkManager
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install com.slack.Slack
-flatpak install flathub us.zoom.Zoom
+wget https://zoom.us/client/latest/zoom_x86_64.pkg.tar.xz
+pacman -U zoom_x86_64.pkg.tar.xz
 EOT
