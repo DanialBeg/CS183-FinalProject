@@ -39,7 +39,7 @@ mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
 # ================================================================================
 
-pacstrap /mnt base linux linux-firmware base-devel vim networkmanager grub efibootmgr firefox git xorg xfce4 flatpak libreoffice wget pulseaudio
+pacstrap /mnt base linux linux-firmware base-devel vim networkmanager grub efibootmgr firefox git xorg xfce4 flatpak libreoffice wget pulseaudio lightdm lightdm-gtk-greeter
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt << "EOT"
 ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
@@ -55,6 +55,7 @@ root
 root
 systemctl enable NetworkManager
 systemctl enable pulseaudio
+systemctl enable lightdm.service
 wget https://zoom.us/client/latest/zoom_x86_64.pkg.tar.xz
 pacman -U --noconfirm zoom_x86_64.pkg.tar.xz
 rm zoom_x86_64.pkg.tar.xz
