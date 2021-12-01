@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# NETWORKING======================================================================
+# NETWORKING
 # ip link output shows us that our network interface will be output and we 
 # confirm connection to the internet using ping. 
 ip link
 ping -c 3 archlinux.org
 # ================================================================================
 
-# Confirm systemclock is correct to real time=====================================
+# CONFIRM SYSTEM TIME IS CORRECT
 timedatectl set-ntp true
 # ================================================================================
 
-# PARTITIONING THE SYSTEM=========================================================
+# PARTITIONING THE SYSTEM
 # fdisk is a command line interface (CLI) tool that can be used to partition the drives.
 # For our systems, the computers will be using a non NVME SSD, so they typically are sd<x> drives
 # STR variable holds the input that will be piped to fdisk, to set up two partitions for the system
@@ -21,7 +21,7 @@ STR=$'o\nn\np\n1\n\n+128M\na\nn\np\n2\n\n\nw'
 echo "$STR" | fdisk /dev/sda
 # ================================================================================
 
-# MAKING FILESYSTEMS==============================================================
+# MAKING FILESYSTEMS
 # Filesystems determine how data storage will work for a partition. mkfs = make filesystem command
 # ext4 (extend 4) will be used for our bootloader.
 # btrfs was used for the root fs for snapshot capability. Incase something goes wrong with use computer can restore to previous state.
@@ -29,7 +29,7 @@ mkfs.ext4 /dev/sda1
 mkfs.btrfs /dev/sda2
 # ================================================================================
 
-# MOUNTING THE DRIVES=============================================================
+# MOUNTING THE DRIVES
 # Mounting is necessary in order to access and modify the newly formatted filesystems on /dev/sda1 and /dev/sda2. 
 # Mounting will attach the filesystems to /mnt and /mnt/boot for /dev/sda2 and /dev/sda1 respectively. 
 # At this point, files on the desired machine are readible by the live iso.
@@ -39,8 +39,19 @@ mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
 # ================================================================================
 
+# READYING THE SYSTEM
+# pacstrap is an arch specific command that allows us to install software into the system instead of chrooting and then installing
+# The necessary packages are base, linux, and linux firmware which will get the kernel and other necessary software to have a bare functioning system
+# Other software is useful software and bare minimum for working system for students
+# fstab is a config file where we can automatically mount the SSD everytime the device is recognized. (It's useful for any storage device.)
 pacstrap /mnt base linux linux-firmware base-devel vim networkmanager grub efibootmgr firefox git xorg xfce4 flatpak libreoffice wget pulseaudio
 genfstab -U /mnt >> /mnt/etc/fstab
+# ================================================================================
+
+# CHROOT
+# The chroot (change root directory) command changes the root directory of a calling process to a specified path.
+# This allows us to effectively enter and modify the actual system where Arch Linux will be installed
+
 arch-chroot /mnt << "EOT"
 ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 hwclock --systohc
