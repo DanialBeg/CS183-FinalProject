@@ -27,8 +27,7 @@ passwd
 root
 root
 systemctl enable NetworkManager
-flatpak remote-add --if-not-exists flathub
-https://flathub.org/repo/flathub.flatpakrepo
-sudo flatpak install com.slack.Slack
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install com.slack.Slack
 flatpak install flathub us.zoom.Zoom
 EOT
