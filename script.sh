@@ -63,8 +63,8 @@ useradd -m -G wheel -s /bin/bash student
 passwd student
 ucr
 ucr
-touch ~/.bash_profile
-echo exec startxfce4 > ~/.bash_profile
+touch /home/student/.bash_profile
+echo exec startxfce4 >> /home/student/.bash_profile
 EOT
 umount -R /mnt
 reboot
