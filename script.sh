@@ -4,7 +4,7 @@ ip link
 ping -c 3 archlinux.org
 timedatectl set-ntp true
 # STR=$'g\nn\n1\n\n+512M\nt\n1\nn\n\n\n\nw'
-STR=$'o\nn\n1\n\n+128M\na\nn\np\n2\n\n\nw'
+STR=$'o\nn\np\n1\n\n+128M\na\nn\np\n2\n\n\nw'
 echo "$STR" | fdisk /dev/sda
 # mkfs.vfat -F 32 /dev/sda1
 mkfs.ext4 /dev/sda1
