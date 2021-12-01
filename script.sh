@@ -22,6 +22,7 @@ locale-gen
 touch /etc/hostname
 echo ucr_localhost > /etc/hostname
 pacman -S networkmanager grub efibootmgr
-grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB
+# grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB
+grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 EOT
